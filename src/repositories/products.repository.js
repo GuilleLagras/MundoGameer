@@ -13,6 +13,7 @@ class ProductRepository {
     }
   }
 
+  
   async findById(id) {
     try {
       return await this.dao.findById(id);

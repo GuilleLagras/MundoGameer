@@ -25,8 +25,6 @@ viewsRouter.get('/', async (req, res) => {
 
     const productObject = result.map(doc => doc.toObject());
 
-   
-
     res.render('home', {
       productList: productObject
     });
@@ -36,12 +34,12 @@ viewsRouter.get('/', async (req, res) => {
   }
 });
 
-viewsRouter.get('/realtimeproducts',jwtValidator, authMiddleware(adminAuthMiddleware), async (req, res) => {
+viewsRouter.get('/realtimeproducts', jwtValidator, authMiddleware(adminAuthMiddleware), async (req, res) => {
   try {
-    const limit = 100; 
+    const limit = 100;
 
     const { result } = await productRepository.findAllCustom({
-      limit: limit, 
+      limit: limit,
     });
     const productObject = result.map(doc => doc.toObject());
     res.render('realTimeProducts', {
@@ -53,31 +51,32 @@ viewsRouter.get('/realtimeproducts',jwtValidator, authMiddleware(adminAuthMiddle
 });
 
 //agregar SOLO USUARIO ENTRA AL CHAT 
-viewsRouter.get('/chat',jwtValidator,authMiddleware(userAuthMiddleware), async (req, res) => {
+viewsRouter.get('/chat', jwtValidator, authMiddleware(userAuthMiddleware), async (req, res) => {
   try {
-    const {email:userEmail}= req.user
+    const { email: userEmail } = req.user
     const messages = await messageRepository.getAllMessages();
-    res.render('chat', { messages , userEmail });
+    res.render('chat', { messages, userEmail });
   } catch (error) {
-    console,log(error)
-    res.redirect('/login')}
+    console, log(error)
+    res.redirect('/login')
+  }
 });
 
-viewsRouter.get('/api/products',jwtValidator,authMiddleware(userAuthMiddleware), async (req, res) => {
+viewsRouter.get('/api/products', jwtValidator, authMiddleware(userAuthMiddleware), async (req, res) => {
   try {
     const { info, result } = await productRepository.findAllCustom(req.query);
 
-  const productObject = result.map(doc => doc.toObject());
-  const { cartId } = req.user;
-  const { cartLenght } = await cartsRepository.findCartById(cartId);
- res.render('products', {
+    const productObject = result.map(doc => doc.toObject());
+    const { cartId } = req.user;
+    const { cartLenght } = await cartsRepository.findCartById(cartId);
+    res.render('products', {
       productList: productObject,
       user: req.user,
       cartLenght,
       pagination: {
         prevLink: info.prevLink,
         nextLink: info.nextLink,
-    },
+      },
     });
   } catch (error) {
     res.redirect('/login')
@@ -85,30 +84,30 @@ viewsRouter.get('/api/products',jwtValidator,authMiddleware(userAuthMiddleware),
 });
 
 
-viewsRouter.get('/api/product/:pid', jwtValidator,authMiddleware(userAuthMiddleware), async (req, res) => {
+viewsRouter.get('/api/product/:pid', jwtValidator, authMiddleware(userAuthMiddleware), async (req, res) => {
   try {
-      const pid = req.params.pid;
-      const { cartId } = req.user;
+    const pid = req.params.pid;
+    const { cartId } = req.user;
 
-      const product = await productRepository.findById(pid);
+    const product = await productRepository.findById(pid);
 
-      if (!product) {
-          return res.status(404).json({ error: 'Producto no encontrado.' });
-      }
+    if (!product) {
+      return res.status(404).json({ error: 'Producto no encontrado.' });
+    }
 
-      res.render('productView', { product, cartId });
+    res.render('productView', { product, cartId });
   } catch (error) {
     res.redirect('/login')
-      }
+  }
 });
 
 
 viewsRouter.get('/api/cart/:cid', async (req, res) => {
   try {
     const idCart = req.params.cid;
-    const {cart , total} = await cartsRepository.findCartById(idCart); 
-    res.render('cart', { cart ,total ,idCart});
-   } catch (error) {
+    const { cart, total } = await cartsRepository.findCartById(idCart);
+    res.render('cart', { cart, total, idCart });
+  } catch (error) {
 
     res.status(500).send('Error al renderizar la página de carrito');
   }
@@ -116,18 +115,18 @@ viewsRouter.get('/api/cart/:cid', async (req, res) => {
 
 // viewsRouter
 viewsRouter.get('/signup', async (req, res) => {
-if (req.authenticated) {
-      return res.redirect('/api/products');
+  if (req.authenticated) {
+    return res.redirect('/api/products');
   }
   res.render('signup', { user: req.user });
 });
 
 viewsRouter.get('/login', async (req, res) => {
   if (req.authenticated) {
-      return res.redirect('/api/products');
+    return res.redirect('/api/products');
   }
 
- res.render('login', { user: req.user });
+  res.render('login', { user: req.user });
 });
 
 //purchase
@@ -174,11 +173,11 @@ viewsRouter.get("/:idCart/purchase", jwtValidator, async (req, res) => {
 
 
 viewsRouter.get('/restore', async (req, res) => {
-  
- res.render('restore')
+
+  res.render('restore')
 });
 viewsRouter.get('/error', async (req, res) => {
-  
+
   res.render('error')
- });
+});
 export default viewsRouter;

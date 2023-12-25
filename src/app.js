@@ -53,6 +53,7 @@ app.use(passport.initialize());
 //Sacar si uso JWT
 //app.use(passport.session())
 
+
 //handlebars
 const hbs = exphbs.create({
   extname: 'handlebars',

@@ -1,5 +1,4 @@
 import passport from 'passport';
-//import { usersRepository } from './dao/Mongo/manager/users.dao.js';
 
 import { Strategy as LocalStrategy } from 'passport-local';
 import { Strategy as GithubStrategy } from 'passport-github2';
@@ -19,6 +18,7 @@ passport.use('signup', new LocalStrategy({ passReqToCallback: true, usernameFiel
       return done(null, false);
     }
 
+    
     try {
       const hashedPassword = await hashData(password);
       const newCart = await cartsRepository.createCart();
@@ -70,40 +70,42 @@ passport.use('login', new LocalStrategy({ usernameField: 'email' }, async (email
 
 //Github 
 passport.use('github', new GithubStrategy({
-    clientID: config.git_client_id,
-    clientSecret: config.git_client_secret,
-    callbackURL: "http://localhost:8080/api/sessions/callback",
-},async(accessToken,refreshToken,profile,done)=>{
-    try {
+  clientID: config.git_client_id,
+  clientSecret: config.git_client_secret,
+  callbackURL: "http://localhost:8080/api/sessions/callback",
+}, async (accessToken, refreshToken, profile, done) => {
+  try {
+    // Check if the user exists in the database by email
+    const existingUser = await usersRepository.findByEmail(profile._json.email);
 
-        const userDB = await usersRepository.findByEmail(profile._json.email) 
+    if (existingUser) {
+      if (existingUser.isGithub) {
+        return done(null, existingUser); // Authenticated user
+      } else {
+        // Existing user, but not authenticated with GitHub
+        return done(null, false, { message: 'User registered with another authentication method.' });
+      }
+    }
 
-        const newCart = await cartsRepository.createCart();
+    // User not found in the database, create a new user with GitHub
+    const newUserDetails = {
+      username: profile._json.name,
+      email: profile._json.email,
+      password: null, // No password for GitHub-authenticated users
+      isGithub: true,
+      cartId: newCart._id
+    };
 
-        //login
-        if (userDB){
-        if(userDB.isGithub){
-        return done (null, userDB)
-        }else{
-            done(error);
-            return done(null,false)
-        }
-    }
-    //signup 
-    const infoUser={
-        Usuario:profile._json.name,
-        email: profile._json.email ,
-        password: ' ',
-        isGithub:true,
-        cartId: newCart._id
-    }
-    const createUser = await usersRepository.createOne(infoUser)
-    
-    return done ( null, createUser)
-    } catch (error) {
-        done(error)
-    }
-}))
+    const newUser = await usersRepository.createOne(newUserDetails);
+    return done(null, newUser); // Newly authenticated user
+
+  } catch (error) {
+    console.error('Error in GitHub authentication:', error);
+    return done(error); // Handle errors appropriately
+  }
+}));
+
+
 
 //JWT 
 const fromCookies =(req)=>{return req.cookies.token}

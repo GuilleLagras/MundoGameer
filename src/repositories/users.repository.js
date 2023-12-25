@@ -12,6 +12,7 @@ class UsersRepository {
       
     }
   }
+  
   async findByEmail(email) {
     try {
       return await this.dao.findByEmail(email);

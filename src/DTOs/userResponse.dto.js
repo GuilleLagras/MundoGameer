@@ -1,5 +1,6 @@
 export default class UserResDTO {
     constructor(user) {
+      
       this.name = user.name
       this.Usuario = user.Usuario;
       this.isGithub = user.isGithub;
@@ -9,4 +10,3 @@ export default class UserResDTO {
       this.orders = user.orders;
     }
   }
-  

@@ -13,6 +13,7 @@ class MessageRepository {
     }
   }
 
+  
   async getMessageById(id) {
     try {
       return await this.dao.findById(id);

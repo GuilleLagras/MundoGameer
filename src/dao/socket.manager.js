@@ -14,6 +14,7 @@ class SocketManager {
       console.log(`Cliente Desconectado: ${socket.id}`);
     });
 
+    
     // RealTimeProducts
     socket.on('addProduct', async (product) => {
       await this.handleAddProduct(product);
