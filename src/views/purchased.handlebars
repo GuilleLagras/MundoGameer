@@ -1,0 +1,48 @@
+
+<div class="purchased"></div>
+<div class="alert alert-success" role="alert">
+{{ message }}
+</div>
+<h2>Productos Comprados:</h2>
+<div class="cartList">
+{{#each availableProducts}}
+    <div class="cartProduct">
+      <img src="{{product.thumbnails}}" alt="{{product.title}}" class="CartProductImage">
+      <div class="CartProductTitle">
+        <h2>{{product.title}}</h2>
+        <p class="CartProductDescription">Descripción: {{product.description}}</p>
+      </div>
+      <div class="CartQuantity">
+        <p class="CartProductPrice">Precio: ${{product.price}}</p>
+        <p class="CartProductQuantity">Cantidad: {{quantity}}</p>
+      </div>
+    </div>
+    
+{{/each}}
+</div>
+<h2>Total de su compra:$ {{ total }}</h2>
+
+
+{{#if unavailableProducts}}
+
+<div class="alert alert-danger" role="alert">
+ Productos sin Stock:
+</div>
+<div  class="cartList">
+{{#each unavailableProducts}}
+    <div class="cartProduct">
+      <img src="{{product.thumbnails}}" alt="{{product.title}}" class="CartProductImage">
+      <div class="CartProductTitle">
+        <h2>{{product.title}}</h2>
+        <p class="CartProductDescription">Descripción: {{product.description}}</p>
+      </div>
+      <div class="CartQuantity">
+        <p class="CartProductPrice">Precio: ${{product.price}}</p>
+        <p class="CartProductQuantity">Cantidad: {{quantity}}</p>
+      </div>
+    </div>
+</div>
+{{/each}}
+{{/if}}
+<a href="/" class="paginationArrow">Volver a Home</a>
+</div>

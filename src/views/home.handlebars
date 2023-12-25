@@ -1,0 +1,37 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Productos</title>
+</head>
+<body>
+  <header> <h1 class="tituloItem">E-commerce
+  </h1> 
+
+
+ <h2>Productos</h2>
+<div class="container">
+<div class="container">
+    {{#if productList.length}}
+      {{#each productList}}
+        <div class="cards">
+          <img src="{{this.thumbnails}}" alt="Imagen del producto" class="productImage">
+          <h3 class="cardTitle">{{this.title}}</h3>
+          <h4 class="cardPrice">$ {{this.price}}</h4>
+          <h4 class="cardStock">Stock: {{this.stock}}</h4>
+        </div>
+      {{/each}}
+    {{else}}
+      <h1>No se encontraron productos</h1>
+    {{/if}}
+  </div>
+
+
+
+
+</div>
+<a href="/api/products" class="paginationArrow">Mas productos</a>
+</body>
+</html>

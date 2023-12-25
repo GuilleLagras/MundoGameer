@@ -1,0 +1,21 @@
+<div class="sesiones">
+    <div class="overlay">
+    <div class="sesionesChild">
+<h1>Iniciar Sesion</h1>
+<form action="/api/sessions/login" method="post" class="sessionForm">
+<p>Correo Electronico :</p>
+<input type="email" name="email" id="email" placeholder="Email" required>
+<p>Contraseña :</p>
+<input type="password" name="password" id="password" placeholder="Contraseña" required>
+
+<input type="submit" value="Login" class="sessionButton">
+</form>
+
+<a href="/signup" class="cuentas">¿No tienes cuenta?</a>
+<a href="/restore" class="cuentas">¿Has olvidado tu contraseña?</a>
+<p class="inicioPorTerceros"> O Iniciar sesion por:</p>
+<a href='/api/sessions/auth/github'class="githubButton">
+<img src="https://marketing4ecommerce.net/wp-content/uploads/2018/06/GitHub-logo-2-imagen.jpg" alt="Logo de GitHub" /></a>
+</div>
+</div>
+</div>

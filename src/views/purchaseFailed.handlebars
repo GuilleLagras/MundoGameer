@@ -1,0 +1,22 @@
+<div class="purchased">
+<div class="alert alert-danger" role="alert">
+  {{ message }}
+</div>
+<h2>Productos sin Stock:</h2>
+<div class="cartList">
+{{#each unavailableProducts}}
+<div class="cartProduct">
+      <img src="{{product.thumbnails}}" alt="{{product.title}}" class="CartProductImage">
+      <div class="CartProductTitle">
+        <h2>{{product.title}}</h2>
+        <p class="CartProductDescription">Descripción: {{product.description}}</p>
+      </div>
+      <div class="CartQuantity">
+        <p class="CartProductPrice">Precio: ${{product.price}}</p>
+        <p class="CartProductQuantity">Cantidad: {{quantity}}</p>
+      </div>
+    </div>
+{{/each}}
+</div>
+<a href="/" class="paginationArrow">Volver a Home</a>
+</div>

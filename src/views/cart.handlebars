@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Carrito de Compras | E-commerce</title>
+</head>
+<body>
+  <h1 class="tituloItem">Carrito de Compras :</h1>
+ <div class="cartList">
+  {{#each cart.products}}
+    <div class="cartProduct">
+      <img src="{{product.thumbnails}}" alt="{{product.title}}" class="CartProductImage">
+      <div class="CartProductTitle">
+        <h2>{{product.title}}</h2>
+        <p class="CartProductDescription">Descripción: {{product.description}}</p>
+      </div>
+      <div class="CartQuantity">
+        <p class="CartProductPrice">Precio: ${{product.price}}</p>
+        <p class="CartProductQuantity">Cantidad: {{quantity}}</p>
+      </div>
+    </div>
+  {{/each}}
+</div>
+<div class="checkout">
+
+<div id="total">Total: ${{total}}.00</div>
+<a href="/{{idCart}}/purchase">
+<button class="btn btn-primary" > Comprar ahora</button></a>
+</div>
+</body>
+</html>

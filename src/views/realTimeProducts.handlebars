@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Websocket Products || E-commerce</title>
+</head>
+<body>
+<h2>Live Updated Products</h2>
+
+<div class="container">
+    {{#if productList.length}}
+      {{#each productList}}
+        <div class="cards">
+          <img src="{{this.thumbnails}}" alt="Imagen del producto" class="productImage">
+          <h3 class="cardTitle">{{this.title}}</h3>
+          <h4 class="cardPrice">$ {{this.price}}</h4>
+          <h4 class="cardStock">Stock: {{this.stock}}</h4>
+          <button onclick="deleteProduct('{{this._id}}')"> Eliminar ✖️</button>
+        </div>
+      {{/each}}
+    {{else}}
+      <h1>No se encontraron productos</h1>
+    {{/if}}
+  </div>
+
+
+
+
+
+
+  <!-- formulario para agregar productos -->
+
+  <form id="formularioAgregarProducto">
+    <input type="text" id="title" placeholder="Título" required>
+    <input type="text" id="description" placeholder="Descripción" required>
+    <input type="number" id="price" placeholder="Precio"  required>
+    <input type="text" id="category" placeholder="Categoría" required>
+    <input type="text" id="code" placeholder="Código" required>
+    <input type="number" id="stock" placeholder="Stock" required>
+     <input type="text" id="thumbnails" placeholder="URL de la imagen">
+    <button type="submit">Agregar Producto</button>
+  </form>
+
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/js/index.js"></script>
+</body>
+</html>

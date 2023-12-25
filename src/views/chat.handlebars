@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mensaje | E-commerce</title>
+</head>
+<body>
+  <div class="contacto">
+    <div class="chats">
+      <h2 class="ChatMessage">  Mensajes : </h2>
+    {{#if messages.length}}
+      <div id="chat">
+        {{#each messages}}
+          <div class="message">
+            <p class="user">{{this.email}} :</p>
+            <p class="text">{{message}}</p>
+          </div>
+        {{/each}}
+      </div>
+    {{else}}
+      <h1 class="message">No se encontraron Mensajes</h1>
+    {{/if}}
+    </div>
+    <div class="contactanos">
+    <h1>Contactanos !</h1>
+    <form id="message-form" action="/chat" method="POST">
+    <div class="correo">
+    <p>Correo :  {{userEmail}}</p>
+      <input type="hidden" id="email" value="{{userEmail}}"></div>
+
+      <div class="mensaje"><p>Mensaje :</p>
+      <input type="text" name="message" id="messageInput" placeholder="  Escribe un mensaje" class="inputMensaje" required>
+      </div>
+
+      <button type="submit">Enviar</button>
+    </form>
+    </div>
+  </div>
+   <script src="/socket.io/socket.io.js"></script>
+   <script src="/js/chat.js"></script>
+</body>
+</html>

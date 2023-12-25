@@ -1,0 +1,30 @@
+<div class="sesiones">
+    <div class="overlay">
+        <div class="sesionesChild">
+            <h1>Registrarse</h1>
+            <form action="/api/sessions/signup" method="post" class="sessionForm">
+                <p>Nombre :</p>
+                <input type="text" name="first_name" id="first_name" placeholder="Nombre" required>
+
+                <p>Apellido :</p>
+                <input type="text" name="last_name" id="last_name" placeholder="Apellido" required>
+
+                <p>Nombre De Usuario :</p>
+                <input type="text" name="Usuario" id="Usuario" placeholder="Nombre de Usuario" required>
+
+                <p>Correo Electronico :</p>
+                <input type="email" name="email" id="email" placeholder="Email" required>
+
+                <p>Edad :</p>
+                <input type="number" name="age" id="age" placeholder="Edad" required>
+
+                <p>Contraseña :</p>
+                <input type="password" name="password" id="password" placeholder="Contraseña" required>
+
+                <input type="submit" value="Sign Up" class="sessionButton">
+            </form>
+
+            <a href="/login" class="cuentas">¿Ya tienes cuenta?</a>
+        </div>
+    </div>
+</div>

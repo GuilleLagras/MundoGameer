@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Productos</title>
+</head>
+<body>
+  <header class="productsHeader">
+    <h1 class="tituloItem">E-commerce</h1>
+    <div>
+    <button class="btn btn-dark">
+      <a href="/api/sessions/current"  class="signout">
+  👤
+{{#ifEqual user.role 'Admin'}}
+  {{user.Usuario}} (Administrador)
+{{else}}
+  {{user.Usuario}} (Usuario)
+{{/ifEqual}}
+</a>
+</button>
+    <button class="btn btn-dark">
+        <a href="/api/sessions/signout" class="signout">Sign Out
+        </a>
+      </button>
+  
+      </div>
+       </header> 
+<a href="/api/cart/{{user.cartId}}"id="carrito"><i class="fa-solid fa-cart-shopping fa-2xl" style="color: #000000;"  ></i><span class="badge">{{ cartLenght }}</span></a>
+
+<form method="get" action="/api/products" id="filter-form" class="filtros">
+  <label for="category">Seleccionar categoría:</label>
+  <select name="query" id="category">
+    <option value="">Todas las categorías</option>
+    <option value="Electronica">Electronica</option>
+    <option value="Videojuegos">Videojuegos</option>
+  </select>
+
+  <label for="availability">  Filtrar por Disponibilidad:</label>
+  <select name="availability" id="availability">
+    <option value="">Todos</option>
+    <option value="available">Disponibles</option>
+    <option value="outOfStock">Sin Stock</option>
+  </select>
+
+  <label for="sort">  Ordenar por precio:</label>
+  <select name="sort" id="sort">
+     <option value="">Sin ordenar</option>
+    <option value="asc">Menor a mayor</option>
+    <option value="desc">Mayor a menor</option>
+  </select>
+
+  <button type="submit" class="filterButton">Filtrar</button>
+</form>
+  <div class="container">
+    {{#if productList.length}}
+      {{#each productList}}
+        <div class="cards">
+          <img src="{{this.thumbnails}}" alt="Imagen del producto" class="productImage">
+          <h3 class="cardTitle">{{this.title}}</h3>
+          <h4 class="cardPrice">$ {{this.price}}</h4>
+          <h4 class="cardStock">Stock: {{this.stock}}</h4>
+          <a href="/api/product/{{_id}}" class="btn btn-primary">Ver Producto</a>
+        </div>
+      {{/each}}
+    {{else}}
+      <h1>No se encontraron productos</h1>
+    {{/if}}
+  </div>
+
+
+
+<div class="pagination">
+    {{#if pagination.prevLink}}
+      <a href="{{pagination.prevLink}}" class="paginationArrow">⬅️Previous</a>
+    {{/if}}
+    {{#if pagination.nextLink}}
+      <a href="{{pagination.nextLink}}" class="paginationArrow">Next➡️</a>
+    {{/if}}
+  </div>
+
+  
+ <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<script src="/js/filter.js"></script>
+
+</body>
+</html>
